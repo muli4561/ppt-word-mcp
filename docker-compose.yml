@@ -1,0 +1,56 @@
+# ppt-word-gen：PPT / Word Demo + REST API + MCP
+services:
+  ppt-word-gen:
+    build: .
+    image: ppt-word-gen:0.8.0
+    container_name: ppt-word-gen
+    restart: always
+    stop_grace_period: 60s
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../ppt-master:/ppt-master
+      - ppt-word-gen-data:/data
+    environment:
+      LLM_BASE_URL: "${LLM_BASE_URL:-https://dashscope.aliyuncs.com/compatible-mode/v1}"
+      LLM_API_KEY: "${LLM_API_KEY:-}"
+      LLM_MODEL: "${LLM_MODEL:-qwen3.7-plus}"
+      VISION_ENABLED: "${VISION_ENABLED:-0}"
+      VISION_BACKEND: "${VISION_BACKEND:-openai}"
+      VISION_BASE_URL: "${VISION_BASE_URL:-}"
+      VISION_API_KEY: "${VISION_API_KEY:-}"
+      VISION_MODEL: "${VISION_MODEL:-}"
+      VISION_IMAGE_SIZE: "${VISION_IMAGE_SIZE:-1K}"
+      MOCK_LLM: "${MOCK_LLM:-1}"
+      PUBLIC_URL_PREFIX: ""
+      PUBLIC_BASE_URL: "${PUBLIC_BASE_URL:-http://127.0.0.1:8000}"
+      PPT_WORD_GEN_TOKEN: "${PPT_WORD_GEN_TOKEN:-}"
+      DOWNLOAD_SIGNING_SECRET: "${DOWNLOAD_SIGNING_SECRET:-}"
+      DOWNLOAD_SIGNING_SECRET_FILE: "/data/.download_signing_secret"
+      SIGNED_URL_EXPIRE_SECONDS: "86400"
+      MCP_DNS_REBINDING_PROTECTION: "${MCP_DNS_REBINDING_PROTECTION:-0}"
+      MCP_ALLOWED_HOSTS: "${MCP_ALLOWED_HOSTS:-localhost,localhost:*,127.0.0.1,127.0.0.1:*}"
+      MAX_CONCURRENT_TASKS: "2"
+      MAX_QUEUED_TASKS: "20"
+      TASK_DB_PATH: "/data/tasks.db"
+      REPORT_TASK_DB_PATH: "/data/report_tasks.db"
+      REPORT_OUTPUT_DIR: "/data/reports"
+      UPLOAD_DIR: "/data/uploads"
+      BUSINESS_TEMPLATE_DIR: "/data/business_templates"
+      UPLOAD_EXPIRE_HOURS: "24"
+      MAX_UPLOAD_MB: "20"
+      MCP_INLINE_UPLOAD_MB: "5"
+      MAX_CONCURRENT_REPORT_TASKS: "1"
+      MAX_QUEUED_REPORT_TASKS: "10"
+      TASK_EXPIRE_HOURS: "24"
+      TASK_CLEANUP_INTERVAL_SECONDS: "600"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import json,urllib.request; d=json.load(urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=5)); raise SystemExit(0 if d.get('status') == 'ok' and d.get('task_store') == 'ok' and d.get('report_task_store') == 'ok' else 1)"]
+      interval: 15s
+      timeout: 8s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  ppt-word-gen-data:
+    name: "${DATA_VOLUME_NAME:-ppt-word-gen-data}"

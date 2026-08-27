@@ -1,0 +1,54 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+*.egg
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# 环境变量（含密钥，绝不可提交）
+.env
+.env.compose
+.env.local
+.env.*.local
+
+# 运行时数据（数据库、上传、报告产物）
+data/
+outputs/
+
+# 离线 wheel 包（~98MB，不适合入 Git）；保留空目录供联网构建使用
+.docker-wheels/*
+!.docker-wheels/.gitkeep
+.mcp-wheels/*
+!.mcp-wheels/.gitkeep
+.word-wheels/*
+!.word-wheels/.gitkeep
+
+# IDE / 编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Claude Code 本地配置
+.claude/
+
+# 调试 / 临时文件
+__sim_b64.txt
+sim_electronics_drive_validation.md
+AI仿真数据示例_电驱系统联合仿真.txt
+
+# OS 生成
+.DS_Store
+Thumbs.db
+Desktop.ini

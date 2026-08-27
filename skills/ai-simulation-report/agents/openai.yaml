@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI 仿真报告"
+  short_description: "生成可验证的 AI 仿真交付与测试 Word 报告"
+  default_prompt: "Use $ai-simulation-report to create an evidence-backed AI simulation delivery report."

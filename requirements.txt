@@ -1,0 +1,28 @@
+# ppt-word-gen 与容器离线构建共用的唯一依赖清单
+
+# Web 服务
+fastapi>=0.110
+uvicorn>=0.29
+# Agent 客户端基于 OpenAI Python SDK 1.x；wheelhouse 当前提供 openai 1.109.1。
+openai>=1.30,<2
+python-multipart>=0.0.9
+python-dotenv>=1.0
+mcp==2.0.0
+python-docx==1.2.0
+docxtpl==0.20.2
+docxcompose==2.2.0
+babel==2.18.0
+
+# ppt-master 核心（source 转换 + SVG -> PPTX 导出）
+python-pptx>=0.6.21
+XlsxWriter>=3.0.0
+skia-pathops>=0.9.2
+uharfbuzz>=0.50.0
+PyMuPDF>=1.23.0
+mammoth>=1.6.0
+markdownify>=0.11.6
+openpyxl>=3.1.0
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+numpy>=1.20.0
+Pillow>=9.0.0
